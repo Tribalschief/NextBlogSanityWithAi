@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Inter } from "next/font/google"
-import "../(main)/global.css"
+import "../globals.css"
 import type React from "react"
 
 const inter = Inter({ subsets: ["latin"] })

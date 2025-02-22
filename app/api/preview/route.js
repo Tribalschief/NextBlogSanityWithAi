@@ -1,7 +1,7 @@
 // app/api/preview/route.ts
 import { draftMode } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { client } from '@/lib/sanity.client'
+import { client } from '@/sanity/lib/client'
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
