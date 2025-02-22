@@ -1,9 +1,10 @@
 import Link from "next/link"
-import { Inter } from "next/font/google"
+
 import "../globals.css"
 import type React from "react"
+import { Pacifico } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] })
+const pacifico = Pacifico({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
   title: "My Blog",
@@ -17,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={pacifico.className}>
         <header className="bg-gray-800 text-white p-4">
           <nav className="container mx-auto flex justify-between items-center">
             <Link href="/" className="text-xl font-bold">
