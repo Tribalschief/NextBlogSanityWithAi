@@ -1,5 +1,5 @@
 import { defineType } from 'sanity';
-import TagsWithAI from '../TagsWithAi';
+import TagsWithAI from '../tagswithai';
 export const posts = defineType({
     name: 'post',
     title: 'Post',

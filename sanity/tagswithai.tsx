@@ -1,10 +1,13 @@
+'use client'
 import { useState } from 'react';
 import { useFormValue, set } from 'sanity';
+interface TagsWithAIProps {
+  onChange: (value: any) => void;
+}
 
-
-const TagsWithAI = (props) => {
+const TagsWithAI = (props:TagsWithAIProps) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const content = useFormValue(['body']); // Get post content
 
@@ -30,7 +33,7 @@ const TagsWithAI = (props) => {
         setError('Failed to generate tags.');
       }
     } catch (err) {
-      setError(`Error fetching tags: ${err.message}`);
+      setError(`Error fetching tags: ${err}`);
     }
 
     setLoading(false);

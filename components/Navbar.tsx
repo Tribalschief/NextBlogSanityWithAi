@@ -53,7 +53,7 @@ const { user } =  useUser(); // Fetch user on the server
                     </Link>
                   ))}
                   <div className="pt-6">
-                  <ClerkLoaded className="flex flex-col space-y-2 mt-4">
+                  <ClerkLoaded>
                     <div >
   {user ? (
     <p className="text-lg font-medium"><UserButton/></p>
@@ -96,7 +96,7 @@ const { user } =  useUser(); // Fetch user on the server
               </Link>
             ))}
             <div className="hidden lg:block">
-            <ClerkLoaded className="flex flex-col space-y-2 mt-4">
+            <ClerkLoaded>
               
   {user ? (
     <p className="text-lg font-medium"><UserButton/></p>
