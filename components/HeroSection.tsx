@@ -1,14 +1,10 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { Pacifico } from "next/font/google"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { useGSAP } from "@gsap/react"
-
-gsap.registerPlugin(ScrollTrigger)
 
 const pacifico = Pacifico({
   subsets: ["latin"],
@@ -31,26 +27,22 @@ function ElegantShape({
 }) {
   const shapeRef = useRef(null)
 
-  useGSAP(() => {
+  useEffect(() => {
+    if (!shapeRef.current) return
+
     gsap.fromTo(
       shapeRef.current,
       {
         opacity: 0,
-        y: -150,
+        y: -50,
         rotate: rotate - 15,
       },
       {
         opacity: 1,
         y: 0,
         rotate: rotate,
-        duration: 2.4,
+        duration: 1.5,
         ease: "power3.out",
-        scrollTrigger: {
-          trigger: shapeRef.current,
-          start: "top bottom-=100",
-          end: "top center",
-          scrub: 1,
-        },
       },
     )
 
@@ -61,7 +53,7 @@ function ElegantShape({
       yoyo: true,
       ease: "sine.inOut",
     })
-  }, [])
+  }, [rotate])
 
   return (
     <div ref={shapeRef} className={cn("absolute", className)}>
@@ -97,44 +89,22 @@ export default function HeroGeometric({
   title1?: string
   title2?: string
 }) {
-  const containerRef = useRef(null)
   const badgeRef = useRef(null)
-  const titleRef = useRef(null)
+  const title1Ref = useRef(null)
+  const title2Ref = useRef(null)
   const subtitleRef = useRef(null)
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
-    })
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 1 })
 
-    tl.fromTo(badgeRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
-      .fromTo(titleRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1 }, "-=0.5")
-      .fromTo(subtitleRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 }, "-=0.5")
-
-    gsap.to(".parallax-bg", {
-      yPercent: 50,
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    })
+    tl.fromTo(badgeRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 })
+      .fromTo(title1Ref.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 }, "+=0.5")
+      .fromTo(title2Ref.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 }, "+=0.5")
+      .fromTo(subtitleRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5 }, "+=0.5")
   }, [])
 
   return (
-    <div
-      ref={containerRef}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white text-black"
-    >
-      <div className="parallax-bg absolute inset-0 bg-gray-100 opacity-50" />
-
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white text-black">
       <div className="absolute inset-0 overflow-hidden">
         <ElegantShape
           width={600}
@@ -143,7 +113,6 @@ export default function HeroGeometric({
           gradient="from-gray-100"
           className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
         />
-
         <ElegantShape
           width={500}
           height={120}
@@ -151,7 +120,6 @@ export default function HeroGeometric({
           gradient="from-gray-200"
           className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
         />
-
         <ElegantShape
           width={300}
           height={80}
@@ -159,7 +127,6 @@ export default function HeroGeometric({
           gradient="from-gray-300"
           className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
         />
-
         <ElegantShape
           width={200}
           height={60}
@@ -167,7 +134,6 @@ export default function HeroGeometric({
           gradient="from-gray-400"
           className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
         />
-
         <ElegantShape
           width={150}
           height={40}
@@ -187,13 +153,14 @@ export default function HeroGeometric({
             <span className="text-sm text-gray-600 tracking-wide">{badge}</span>
           </div>
 
-          <div ref={titleRef}>
-            <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
-              <span className="text-gray-900">{title1}</span>
-              <br />
-              <span className={cn("text-gray-700", pacifico.className)}>{title2}</span>
-            </h1>
-          </div>
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+            <span ref={title1Ref} className="text-gray-900 block">
+              {title1}
+            </span>
+            <span ref={title2Ref} className={cn("text-gray-700 block", pacifico.className)}>
+              {title2}
+            </span>
+          </h1>
 
           <div ref={subtitleRef}>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
